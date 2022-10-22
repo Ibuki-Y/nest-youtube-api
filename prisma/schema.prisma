@@ -6,3 +6,60 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model YouTube {
+  id             String                 @id // YouTubeのVideoIdをセット
+  createdAt      DateTime               @default(now())
+  snippet        YouTubeSnippet?
+  statistics     YouTubeStatistics?
+  status         YouTubeStatus?
+  adsLandingPage YouTubeAdsLandingPage?
+}
+
+// https://www.googleapis.com/youtube/v3/videos
+// snippetの値を一部変換してデータを保存
+model YouTubeSnippet {
+  videoId              String   @id
+  channelId            String
+  title                String
+  description          String
+  thumbnail            String // 大きいサイズから探して見つかったサムネイル画像をセット（maxres, standard, high, medium, default, 見つからなかった場合は空文字列）
+  channelTitle         String
+  tags                 String // カンマ区切りで保存
+  categoryId           String // 数字（文字列）でレスポンスがきてるのでそのまま型で保存
+  liveBroadcastContent String
+  publishedAt          DateTime
+  youtube              YouTube  @relation(fields: [videoId], references: [id])
+}
+
+// statisticsの値を保存
+// 各Countの値はStringになっているため型変換せずにそのまま格納
+// - 再生数がとてつもなく大きいとINTの最大値を超えてしまう可能性があるためString
+// - SQLで数値の大きさに応じてソートかけたい場合はSQLでキャストして対応
+model YouTubeStatistics {
+  videoId       String  @id
+  viewCount     String
+  likeCount     String
+  favoriteCount String
+  commentCount  String
+  youtube       YouTube @relation(fields: [videoId], references: [id])
+}
+
+// statusの値を保存
+model YouTubeStatus {
+  videoId             String  @id
+  uploadStatus        String
+  privacyStatus       String
+  license             String
+  embeddable          Boolean
+  publicStatsViewable Boolean
+  madeForKids         Boolean
+  youtube             YouTube @relation(fields: [videoId], references: [id])
+}
+
+// Puppeteerを使って広告動画のIDと一緒に取得したLPのURLを保存
+model YouTubeAdsLandingPage {
+  videoId        String  @id
+  landingPageUrl String
+  youtube        YouTube @relation(fields: [videoId], references: [id])
+}
