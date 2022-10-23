@@ -78,4 +78,7 @@ Nest is [MIT licensed](LICENSE).
 # prisma
 $ npm i -D prisma
 
+# puppeteer
+$ npm i puppeteer
+
 ```
