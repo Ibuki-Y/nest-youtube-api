@@ -84,6 +84,12 @@ $ npm i puppeteer
 # @nestjs/config
 $ npm i --save @nestjs/config
 
+# @nestjs/schedule
+$ npm i --save @nestjs/schedule
+
+# @types/cron
+$ npm i --save-dev @types/cron
+
 # axios
 $ npm i --save axios@^0.24.0
 
