@@ -7,7 +7,9 @@ export class ApiService {
   private readonly logger = new Logger(ApiService.name);
 
   async getVideo(videoId: string): Promise<VideoData> {
-    const endpoint = 'https://www.googleapis.com/youtube/v3/videos';
+    this.logger.debug('Started the getVideo method.');
+    const endpoint = process.env.ENDPOINT;
+
     const response = await axios.get(endpoint, {
       method: 'GET',
       params: {

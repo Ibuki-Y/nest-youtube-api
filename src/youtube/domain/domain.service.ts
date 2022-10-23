@@ -20,7 +20,7 @@ export class DomainService {
 
     if (!videoId || videoId === sourceVideoId) {
       // 広告動画を取得できなかったとき
-      this.logger.debug('Not found Ads videos.');
+      this.logger.debug('Not found Ads video.');
       return;
     } else if (videoId !== sourceVideoId && !landingPageUrl) {
       // LPのURLを取得できなかったとき
