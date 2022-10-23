@@ -94,3 +94,11 @@ $ npm i --save-dev @types/cron
 $ npm i --save axios@^0.24.0
 
 ```
+
+## Supabase
+
+```bash
+# prisma
+$ npx prisma migrate deploy
+
+```
