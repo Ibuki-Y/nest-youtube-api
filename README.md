@@ -81,4 +81,10 @@ $ npm i -D prisma
 # puppeteer
 $ npm i puppeteer
 
+# @nestjs/config
+$ npm i --save @nestjs/config
+
+# axios
+$ npm i --save axios@^0.24.0
+
 ```
